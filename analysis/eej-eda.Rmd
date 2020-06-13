@@ -1,0 +1,32 @@
+---
+title: "EEJ EDA"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(xlsx)
+library(ggplot2)
+
+eej_studies <- read.xlsx("data-raw/CEE validation reviews.xlsx", 1,
+                         startRow = 2)
+
+
+```
+
+# barchart
+
+```{r}
+eej_studies %>% 
+  ggplot(aes(x = type)) +
+  geom_bar() +
+  labs(title = "Types of publications in Environmental Evidence")
+
+
+```
+
+
+# time
