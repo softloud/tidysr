@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Organising data from systematic reviews and maps" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+<meta name="author" content="Neal Haddaway and Charles T. Gray" />
+
+<meta name="date" content="2020-08-06" />
+
+
+<meta name="description" content="Organising data from systematic reviews and maps">
+
+<title>Organising data from systematic reviews and maps</title>
+
+<script src="libs/header-attrs-2.2/header-attrs.js"></script>
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="#abstract"><span class="toc-section-number">0.1</span> Abstract</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="header">
+<h1 class="title">Organising data from systematic reviews and maps</h1>
+<h3 class="subtitle"><em>Why we are doing it wrong and what we need to change to make data <em>tidy</em></em></h3>
+<h4 class="author"><em>Neal Haddaway and Charles T. Gray</em></h4>
+<h4 class="date"><em>08/06/2020</em></h4>
+</div>
+<div id="abstract" class="section level2" number="0.1">
+<h2><span class="header-section-number">0.1</span> Abstract</h2>
+<p>Why databases are integral to evidence syntheses
+Systematic review and systematic mapping are rigorous methods for reliably identifying, categorising and summarising a body of evidence (ref), and one of the most important steps in the reviewing process is data extraction: locating and abstracting information and study findings from within each manuscript and entering these data into a specifically designed database. Systematic review methodology guidance advocates that these databases be predesigned and planned from the outset to maximise consistency, efficiency and objectivity in how data are extracted (ref). However, reviewers typically design databases from scratch for each review project, and there has been no attempt to standardise systematic review data formats. Efforts have been made to define best practice in computational work with data; a researcher may adhere to, for example, FAIR (findable, accessible, interoperable, and reusable) principles (ref), or the TRUST (transparency, responsibility, user focus, sustainability, technology) principles for digital repositories (ref), but precisely how to implement these principles with the tools available for a given discipline is left to the researcher. As the drive towards Open Science and Open Synthesis picks up pace (refs), consistency in the way the Open Data (the immediate publication of full research data free-of-charge; ref) are presented is important to maximise transparency, usability and legacy of synthesis data.</p>
+<p>Why we should care about good data curation and Open Data
+The Open Science Movement has been instrumental in raising awareness and interest in the benefits of Open Data across disciplines (ref). Various benefits to Open Data have been cited, including: increasing opportunities for reuse and further analysis; facilitating real-time sharing and use of data; increasing research visibility, discovery, impact and recognition; facilitating research validity through replication and verification; decreasing the risk of research fraud through transparency; use of real research in educational materials; facilitating collaborative research and reducing redundancy and research waste across siloed groups; enabling public understanding; increased potential to impact policy; promotion of citizen science (ref). These benefits are the same for Open Data in evidence synthesis (i.e. systematic reviews and maps). Indeed, as synthesists, we are often plagued by incomplete reporting of data and meta-data in primary studies: we should therefore be keenly aware of our mandate to ensure we comply with Open Data principles for the same reasons.
+Beyond this moral obligation and public benefits, there are personal, selfish reasons to care about good data curation in evidence syntheses. Systematic reviews and maps involve the management of large, complex datasets, often with multiple dependencies and nesting: for example, multiple outcomes for a single intervention, multiple interventions within a single study, multiple studies within a single manuscript, and multiple manuscripts on single studies. Added to this, reviewers must comply with strict demands for rigour in the way data extraction is planned, executed and reported (ref). Careful data curation in evidence synthesis is vital to avoid errors that easily propagate and threaten the validity of these substantial projects: particularly where multiple reviewers are working on the same evidence base simultaneously and over long time periods that frequently involve staff turnover. Where used, systematic review management tools (e.g. EPPI Reviewer, RevMan refs) have come a long way to reduce unnecessary errors, but there remains no consistent approach to data extraction across platforms that hampers Open Synthesis (ref).</p>
+<p>Objectives
+As described above, most systematic reviews and maps design bespoke data extraction tools. These databases obviously share similarities, for example citation information, study year, location, etc., and there are necessary differences depending on the focus of the review. However, each database uses different conventions related to column names, cell content formatting and structure. Because of the lack of templates across the evidence synthesis community, reviewers often learn the hard way that databases designed for data extraction are often not suitable for immediate visualisation or analysis (see Figure 1). In addition, data cannot be readily combined across databases, meaning that overlapping reviews cannot share resources in data extraction.
+We outline below several common problems with systematic review and map databases, and then go on to describe how adopting a standard template for database design can help reviewers to wrangle their data automatically for rapid visualisation and analysis, whilst also facilitating Open Data principles. We have the following objectives that sit within a broader theory of change related to improved data management in evidence syntheses:
+i) to provide best practices in data formatting and propose a standard template for evidence synthesis databases
+ii) facilitate the production of tools to allow rapid reformatting of data between types suitable for reading and types suitable for analysis
+iii) to support Open Synthesis as a community, facilitating synthesis and reuse of syntheses
+iv) improve the legacy and impact of syntheses in the future - all using tidy data principles from data science</p>
+<p>Caveat: Other solutions are available
+Here, we provide one solution to the current problem of messy data - tidy databases, but there may be others (e.g. relational databases and graph databases). Many of these solutions will work well together (e.g. relational databases can be based on tidy principles), but what we provide here is an easily understandable concept that does not require specialist software or knowledge of databases. It is also based on principles of interoperability with the most common statistical and programming language, R (ref). By building a database using the principles described herein, users can effortlessly move from a data extraction phase into a data synthesis phase (particularly for quantitative synthesis) without the need for manual (time consuming) data tidying. This solution also allows a single database to be used for multiple types of synthesis; e.g. visualisation in flow diagrams, heat maps, evidence atlases and diagnostic plots as well as data analysis in meta-analysis.</p>
+<p>Three data formats
+Broadly speaking, there are four formats for systematic review and map databases: hybrid formats, wide formats, long formats, and wide-and-long formats (see Figure 1).</p>
+<p>Hybrid formats are relatively easy to comprehend, often with nested column headers to denote related variables. We have termed these ‘hybrid’ because they are used in an attempt to both visualise the dataset in a tabular format for the reader and contain sufficient information to be a complete digital dataset. They typically revolve around the principle of one-line-per-study, such that the study is implied to be the level of data independence. However, these databases are not readily machine readable (i.e. they cannot be immediately filtered, visualised or analysed) where multiple values exist in one cell, for example where studies contain multiple outcomes, and particularly where these outcomes were measured in different ways. Hybrid formats are perhaps the most common in CEE reviews: of 19 systematic maps that we examined, 12 had multiple values per cell (with a mix of comma, semicolon and forward slash separated values), and 9 had multiple columns with multiple values per cell, implying a linkage issue could be present. Where a database contains multiple columns each with multiple values per cell, the implicit linkages between cell values are assumed to apply for all values of all cells: each of the three values in column A are associated with each of the three values in column B in the following example, where we cannot assess which values in column B are associated with which countries in column A (and must assume they all occur at all locations):</p>
+<p>Column A
+Column B
+Sweden, Spain, Lebanon
+forest, plane, mountain</p>
+<p>Wide format databases obey the principle of each row being a study, but avoid multiple values in a single cell that hamper filtering and linking between variables by separating different levels of a variable across multiple columns. Where a database has 10 variables extracted for each study, and each variable has 5 possible values, the database would require at least 50 columns for these data. In order to clearly denote which columns related to the same variable, some form of nesting is required: visually this could be done by having a hierarchy of column headers, but this cannot be readily read by a machine. Better yet, column names should follow standard naming conventions to display this nesting: for example, the variable ‘colour’ could be split across three columns named ‘colour.yellow’, ‘colour.red’, and ‘colour.blue’. Despite not having multiple values per cell, wide formats can still suffer from linkage issues where multiple independent data are coded within a single line.</p>
+<p>Long format databases obey the principle of each row being an independent data point. This may be a study if that study has only one independent set of data (e.g. one method, one outcome, one time period), but will often involve multiple rows per study. Long databases need to track the relationships between rows carefully, and typically do this by using identification codes to denote a particular article, study, location, etc. within which multiple data points are nested. Careful naming conventions are still important for these databases, but each column will contain all levels of a variable, so naming is simpler.</p>
+<p>Wide-and-long formats are a combination of wide and long database formats: for example, they will have a single line per outcome but different factors of a variable will be split across multiple columns.</p>
+<p>The solution
+What is tidy data?
+Data produced from research is often messy, and it requires ‘wrangling’ (i.e. tidying, moving around, reformatting) to get it in a format conducible to analysis. However, this wrangling can be particularly time consuming and can open up the data to errors. By planning datasets from the outset, researchers can save considerable time and reduce the risk of errors.
+Data scientists have established a community of practice related to reducing the messiness of data and its analysis, called tidy data (ref). Tidy data has the following key principles: i) each variable must have its own column; ii) each observation must have its own row; and, iii) each value must have its own cell (ref).</p>
+<p>Tidy data has a number of benefits:
+It is immediately visualisable and analysable with statistical tools
+It avoids issues with data loss (where linkages between multiple values in multiple cells are lost)
+It is much easier to understand because it obeys the key principles above
+Because of the above, it is highly amenable to being made Open, since it is easier to interpret by someone not involved in the study</p>
+<p>How to be tidy in systematic reviews/maps
+Systematic reviewers can easily integrate tidy data principles when designing and publishing their databases. We provide the following advice on designing and using databases within systematic reviews and maps:
+Systematic review authors should consider publishing databases of descriptive information about the included studies (similar to a systematic map database): this is rarely done but increases the utility of the review’s contents, by allowing users to learn about the nature of the evidence base as well as its findings.
+Provide detailed explanatory notes that describe the column titles, and the database structure and conventions in a ‘README’ file or tab of the database worksheet. Within reason, this information should ideally be sufficient to understand the data without needing to carefully read the manuscript.
+Clearly explain what level of independent data has been used in the database: i.e. what is each row in your dataset (a manuscript, a study, a location, an outcome?).
+Facilitate computational transformation (i.e. immediate use of the database in a visualisation or statistical programme) by avoiding multiple values per cell and by using appropriate naming conventions for column names (see Box 1).
+Where there is a need for linkages between multiple values across multiple cells, separate data onto different lines and describe this clearly.
+Become familiar with data wrangling tools to transform between wide and long formats.
+Consider providing multiple formats of a database that allow rapid reading by a human and immediate machine readability.</p>
+<p>Environmental evidence synthesis case studies
+We undertook an analysis of all systematic reviews and maps published by the Collaboration for Environmental Evidence between May 2012 and May 2019 to investigate how reviewers have structured their databases and to what extent the information is reusable. We identified all reviews and maps by hand searching the journal Environmental Evidence (on 05/05/19). We then examined each review and extracted the meta-data outlined in Table 1. This information was checked by a second reviewer.</p>
+<p>Table 1. Meta-data extracted from CEE systematic reviews and maps published between May 2012 and May 2019.
+Column title
+Description
+review.title
+Title of the review (with hyperlink)
+citation
+Journal_name year volume:article number
+pubilcation.date
+Date of publication according to EEJ
+review.type
+Systematic review or systematic map
+database.provided
+Was a database of studies and descriptive information provided as an additional file? 1 = yes, 0 = no
+file.format
+The format of the database file
+data.as.rows.variables.as.columns
+Is the data organised such that independent data points (e.g. studies) are rows and variables are columns? 1 = yes, 0 = no
+multiple.values.per.cell
+Are there any occurrences where cells contain more than one value? 1 = yes, 0 = no
+potential.linking.issue
+Are there any occurrences where cells contain more than one value across multiple variables? 1 = yes, 0 = no
+format.hybrid
+Is the database arranged in a hybrid format? See manuscript for full description. 1 = yes, 0 = no
+format.wide
+Is the database arranged in a wide format? See manuscript for full description. 1 = yes, 0 = no
+format.long
+Is the database arranged in a long format? See manuscript for full description. 1 = yes, 0 = no
+format.wideandlong
+Is the database arranged in a wide-and-long format? See manuscript for full description. 1 = yes, 0 = no
+notes
+Any other comments on data formatting
+database.link
+The URL for the main database file</p>
+<p>We identified a total of 29 systematic reviews and 18 systematic maps (see Additional File 1). XX of them provided a database of studies (either as a narrative table or as a table of data used in quantitative synthesis), xx of which was in a spreadsheet format and xx were provided as Access databases. A total of xx databases did not conform to tidy principles, with xx splitting variables across multiple columns and xx having multiple values per cell. Figure xx shows the formats of these databases, demonstrating that xx format was the most commonly used. We noted several other issues that would cause problems in machine readability, most commonly that xx reviews used multiple different separators for cell values, for example combining commas and semicolons in the same database.</p>
+<p>Proposed standard format for naming conventions and data layout to act as a template for review management software
+Whilst there are a range of naming conventions and options for database structures in systematic reviews, we propose the following practices to act as a standard across the community to maximise efficiency, reuse and training.</p>
+<p>Appreciation for the differences between databases for visualisation and databases for analysis
+The evidence synthesis community should delineate between making databases visually appealing for rapid understanding, versus databases that can be reused and immediately machine read.</p>
+<p>Machine readable database formats (i.e. no multiple values per cell)
+Reviewers can choose between wide and long (or wide-and-long) formats for their databases, but we should move away from the preference for hybrid formats that compress multiple values per cell. Despite being visually appealing, these are difficult to interact with.</p>
+<p>Full stop, lower case naming convention for column names
+This convention is the default is R (ref), a widely used programming language and perhaps the most common platform for meta-analysis. This will facilitate automatic conversion and make it easier to produce Open Source software to switch between database formats.</p>
+<p>Consistency in whichever approach is chosen
+Whatever database format and naming convention is chosen, reviewers should ensure that they use this consistently and do not use multiple formats within a single database (e.g. combining naming conventions or being inconsistent in the use of wide and long formats).</p>
+<p>Conclusions
+Open Data and Open Synthesis bring a range of benefits to the research community and evidence users, that is clear. The way in which we secure this Open future, however, is up for debate. Our proposal aims to chart out a clear and easy future for Open Syntheses by establishing standard practices in the design and publication of databases of evidence produced within systematic review and map projects.</p>
+<p>We appreciate that changing practices across a community will not be an easy task, with a potentially steep learning curve, issues around a lack of awareness, and resistance to change. However, we believe that these obstacles can be easily overcome by providing templates and tools that allow users to design, use and publish databases with ease. Indeed, by embracing standard approaches to database design, we believe that the job of producing and using databases can be made far easier through automation tools (ref).</p>
+<p>Future work is needed to develop resources to support awareness raising and adoption of these tidy data principles, and efforts are underway to produce these. Simultaneously, digital tools are needed to allow reviewers to immediately convert between human and machine readable formats, and between different machine readable formats (i.e. long to wide) for different purposes.</p>
+<p>However, these tools will only be useful if the community of evidence synthesists embraces the need for consistency, the need for Open Data and Open Synthesis and the benefits for tidy systematic review and map databases. In doing so, we can maximise the efficiency of the conduct, updating and upgrading of evidence syntheses.</p>
+<p>Additional Files
+Additional File1. Database of systematic reviews and maps and descriptive information about their database formats.
+Declarations
+Ethics approval and consent to participate
+Not applicable</p>
+<p>Consent for publication
+Not applicable</p>
+<p>Availability of data and material
+Not applicable</p>
+<p>Competing interests
+The authors declare that they have no competing interests.</p>
+<p>Funding
+This work was unfunded</p>
+<p>Authors’ contributions
+NRH and CTG developed the concept and drafted the manuscript. All authors read and approved the final manuscript.</p>
+<p>Acknowledgements
+The authors wish to thank the funders and organisers of the Evidence Synthesis Hackathon 2018 (Mistra EviEM and the Fenner School of the Australian National University) for facilitating this collaboration between participants since the ESH in April 2018.</p>
+<p>References</p>
+</div>
+<p style="text-align: center;">
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

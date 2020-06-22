@@ -1,0 +1,80 @@
+---
+title: "Wide to condensed format"
+description: |
+  A toolchain walkthrough for formatting wide data to condensed.
+author:
+  - name: Nora Jones 
+    url: https://example.com/norajones
+    affiliation: Spacely Sprockets
+    affiliation_url: https://example.com/spacelysprokets
+date: "`r Sys.Date()`"
+output: 
+  distill::distill_article:
+    toc: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(kableExtra)
+
+```
+
+<!-- <aside> -->
+<!-- ```{r codefolder, echo=FALSE, results='asis'} -->
+<!-- codefolder::distill(init = "show") -->
+<!-- ``` -->
+<!-- </aside> -->
+
+Load packages.
+
+
+```{r pkg, message=FALSE}
+# packages used in this walkthrough
+library(tidyverse) 
+
+# the tidyverse is a metapackage that loads a suite of tools
+# useful for working with and summarising data
+
+```
+
+
+<aside>
+If you don't already have the packages installed, run `install.packages("package name here")` in the console pane to install on your system.
+</aside>
+
+
+Let's get some data to work with.
+
+
+```{r}
+
+# import data
+example_dat <- 
+  read_csv("data-raw/Haddawayetal2018bufferstrips.csv")
+
+```
+
+Before we try opening the dataset, let's take a look at its dimensions.
+
+```{r}
+example_dat %>% 
+  dim() %>% # get dimensions
+  { # formatting
+    tibble(
+      rows = .[1],
+      columns = .[2]
+    )
+  } %>% 
+  kable()
+
+```
+
+Not so large it can't be viewed in RStudio. Run the following to inspect the data.
+
+```{r eval=FALSE}
+View(example_dat)
+```
+
+

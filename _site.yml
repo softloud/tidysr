@@ -1,0 +1,17 @@
+name: "tidysr"
+title: "sysreviewdata"
+description: |
+  sysreviewdata
+output_dir: "_site"
+navbar:
+  left:
+    - text: "walkthroughs"
+      menu:
+      - text: "wide to condensed"
+        href: walkthroughs/wide-to-condensed.html
+  right:
+    - text: "home"
+      href: index.html
+    - text: "about"
+      href: about.html
+output: distill::distill_article

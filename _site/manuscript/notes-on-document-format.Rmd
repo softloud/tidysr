@@ -1,0 +1,37 @@
+---
+title: "Notes on document formatting"
+author: "Charles"
+date: "08/06/2020"
+output:
+  bookdown::tufte_html2:
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+;) Copied in the rmarkdown cheat sheet for handy reference into the manuscript folder. When I get stuck I turn to the [Definitive Guide](https://bookdown.org/yihui/rmarkdown/). 
+
+I was today years old when I learnt about the [`rticlles::`](https://github.com/rstudio/rticles) package. 
+
+It has several templates built in in which we can write code and use what seems to be a quasi form of tex, which is handy because I know my way around tex pretty well. It may well have a template that's appropropriate for our submission. 
+
+In the meantime, I have ported the manuscript to a [Tufte](https://bookdown.org/yihui/rmarkdown/tufte-handouts.html) html document, that puports to produce a similar pdf, which might be nice for preprint. 
+
+To see what formats are supported,
+
+```{r}
+# install 
+install.packages("rticles")
+
+# then run
+getNamespaceExports("rticles")
+```
+
+Or just take a scroll of the [readme](https://github.com/rstudio/rticles). 
+
+# Stuff to include in submission-formatted doc
+
+- corresponding author 
+- Keywords: databases; data abstraction; text analysis; text mining; automation; living systematic reviews; evidence synthesis technology

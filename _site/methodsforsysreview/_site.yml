@@ -1,0 +1,12 @@
+name: "methodsforsysreview"
+title: "Methods for designing multifunctional, machine readable systematic review and map databases"
+description: |
+  Methods for designing multifunctional, machine readable systematic review and map databases
+output_dir: "_site"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+output: distill::distill_article
